@@ -11,6 +11,8 @@ Install RBTools
 yum install RBTools
 ```
 
+Optionally (if you work with the same repository most of the time):
+
 Edit `~/.reviweboardrc`
 
 ```
@@ -48,13 +50,14 @@ git commit -a
 Post patch for review:
 
 ```
-rbt post --guess-description --summary="summary" --testing-done="how I tested" --parent=master --disable-ssl-verification
+rbt post --guess-description --summary="summary" --testing-done="how I tested" --disable-ssl-verification
 ```
+
 
 If you do not wish to have pre-set default in `~/.reviewboardrc` or `~/.gitconfig`, then include repository on the command line: 
 
 ```
-rbt post -d --server=https://fermicloud140.fnal.gov/reviews/ --guess-description --summary="ModuleName: patch description"  --repository-url=git://github.com/HEPCloud/decisionengine_module.git
+rbt post -d --server=https://fermicloud140.fnal.gov/reviews/ --guess-description --summary="ModuleName: patch description"  --repository-url=git://github.com/HEPCloud/decisionengine_modules.git
 ```
 
 The command will ask your username / password at reviewboard and will spit the URL of your
@@ -67,7 +70,13 @@ An e-mail be sent to members of "decisionengine" group, and someone will review 
 your review. Commit the change locally and run:
 
 ```
- rbt post  -r NUMBER  --parent=master
+ rbt post -r NUMBER   
+```
+
+or 
+
+```
+rbt post -r NUMBER  --server=https://fermicloud140.fnal.gov/reviews/ --repository-url=git://github.com/HEPCloud/decisionengine_modules.git
 ```
 
 This will post another diff to https://fermicloud140.fnal.gov/reviews/r/NUMBER. Visit the page furnish it with details of your new commit and click publish. 
