@@ -115,7 +115,7 @@ Above command normally opens commit message edit dialog. When writing commit mes
    1. Remove all intermediate commit messages you might have made while developing your patch
    1. Use concise statement to summarize patch. 
    1. Write details in the next line
-   1. add reference to rebview board?. 
+   1. add reference to review board?. 
 
 Here is an example:  
 
