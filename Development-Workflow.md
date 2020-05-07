@@ -29,16 +29,33 @@ Edit `~/.gitconfig` by adding:
 Suggested development cycle 
 ===========================
 
+Create a fork of the main github repo that you can work from.  Then, clone that fork to your workspace:
+
 ```
- git clone https://github.com/HEPCloud/decisionengine_modules
+ git clone https://github.com/<myusername>/decisionengine_modules
  git pull
  git checkout -b <my branch>
+
 ``` 
 
-Work on you branch, periodically rebase from master 
+Work on your branch.
+
+Remember to periodically sync the main github repo (HEPCloud/decisionengine_modules) with your copy of the repo:
 
 ```
- git rebase master 
+git remote add upstream https://github.com/HEPCloud/decisionengine_modules.git
+git fetch upstream
+git checkout master
+git merge upstream/master
+```
+
+or this can be done by creating a pull request on your fork of the repo to merge changes from HEPCloud/decisionengine_modules to your fork.
+
+After any resyncing, rebase your branch on top of master.
+
+```
+git checkout <my branch>
+git rebase master 
 ```
 
 When ready to post, do 
@@ -85,7 +102,8 @@ When review is approved.
 
 ``` 
 git checkout master
-git pull 
+git fetch upstream
+git merge upstream/master
 git checkout <my branch>
 git rebase master
 git checkout master 
@@ -112,8 +130,34 @@ Replaced string.join() where appropriate
 Then push to the remote:
 
 ```
-git push origin HEAD 
+git push origin master 
 ```
+
+Now, open a Pull Request in your fork on github to merge your code into the main repository (merge <username>/decisionengine_modules --> HEPCloud/decisionengine_modules).
+
+After your PR is merged, you might find that your forked repository shows a different commit history than the upstream repo.  This can especially happen if you made any commits during a pull request: these all get squashed into one commit automatically when the PR is merged.  The next time you want to resync your master branch, you might have to either 
+
+  1. Use a pull request to merge HEPCloud/decisionengine_modules into your local repo, or
+  1. Force a resync of your forked copy of the repository with the main repo.  Assuming your git remotes are set like this:
+
+  ```
+  $ git remote -v
+  origin  https://github.com/<username>/decisionengine_modules.git (fetch)
+  origin  https://github.com/<username>/decisionengine_modules.git (push)
+  upstream        https://github.com/HEPCloud/decisionengine_modules.git (fetch)
+  upstream        https://github.com/HEPCloud/decisionengine_modules.git (push)
+  ``` 
+
+  you could do the following:
+
+  ```
+  git fetch upstream
+  git checkout upstream/master
+  git branch -D master
+  git checkout -b master
+  git push --force origin master
+
+  ```
 
 Bug fixes to frozen branch
 ==========================
